@@ -65,3 +65,11 @@ Thumbs.db
 # AWS / local config
 .aws-sam/
 samconfig.toml
+# Django
+db.sqlite3
+db.sqlite3-journal
+*.sqlite3
+/staticfiles/
+/static_root/
+/media/
+local_settings.py
