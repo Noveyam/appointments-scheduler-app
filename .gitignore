@@ -39,6 +39,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+unittests.xml
 
 # Environments
 .env
