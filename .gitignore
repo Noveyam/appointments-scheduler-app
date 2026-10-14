@@ -75,4 +75,5 @@ db.sqlite3-journal
 /media/
 local_settings.py
 
-docs/troubleshooting.md
+# Personal project notes (local only)
+/docs/

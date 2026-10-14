@@ -1,0 +1,41 @@
+[
+{
+  "model": "appointments.service",
+  "pk": 3,
+  "fields": {
+    "service_name": "Haircut",
+    "description": "Standard haircut",
+    "price": "40.00",
+    "duration": 30
+  }
+},
+{
+  "model": "appointments.service",
+  "pk": 4,
+  "fields": {
+    "service_name": "Beard trim",
+    "description": "Basic beard trim",
+    "price": "15.00",
+    "duration": 15
+  }
+},
+{
+  "model": "appointments.hairdresser",
+  "pk": 1,
+  "fields": {
+    "first_name": "Alex",
+    "last_name": "Morgan"
+  }
+},
+{
+  "model": "appointments.appointment",
+  "pk": 1,
+  "fields": {
+    "hairdresser": 1,
+    "service": 3,
+    "start_datetime": "2026-10-14T10:00:00Z",
+    "end_datetime": "2026-10-14T10:30:00Z",
+    "customer_name": "Demo Customer"
+  }
+}
+]
