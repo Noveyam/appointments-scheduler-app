@@ -32,6 +32,7 @@ class AppointmentsIndexViewTests(TestCase):
         date_url = reverse("index-date", args=(3, 1, first_date))
         response = self.client.get(date_url)
         self.assertContains(response, "Time", status_code=200)
+        available_before = response.context["start_times_available_count"]
 
         appt_time = "12:00"
         self.client.post(
@@ -53,3 +54,6 @@ class AppointmentsIndexViewTests(TestCase):
             if t["is_blocked"]
         ]
         assert appt_time in blocked, "Blocked time not found"
+
+        available_after = response.context["start_times_available_count"]
+        assert available_after < available_before, "Available count not decremented"

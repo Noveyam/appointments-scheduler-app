@@ -63,6 +63,7 @@
 
     {% if start_times_all %}
     <h2 id="time">Time</h2>
+    <p>{{start_times_available_count}} start times available</p>
 
     <form method="post" action="{% url 'create' %}">
         {% csrf_token %}
