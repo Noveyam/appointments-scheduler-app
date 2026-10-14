@@ -8,6 +8,14 @@
     {% endfor %}
 {% endif %}
 
+{% if announcements %}
+    {% for announcement in announcements %}
+        <div class="alert alert-secondary" role="alert">
+            {{ announcement }}
+        </div>
+    {% endfor %}
+{% endif %}
+
     <h2>Services</h2>
 
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">

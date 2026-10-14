@@ -6,6 +6,15 @@ from zoneinfo import ZoneInfo
 from django.test import TestCase
 from django.urls import reverse
 
+def mock_scan(**_kwargs):
+    """Return announcement data without calling AWS."""
+    return {
+        "Items": [
+            {"Contents": {"S": "Test announcement"}}
+        ]
+    }
+
+@patch("appointments.views.dynamodb.scan", new=mock_scan)
 
 class AppointmentsIndexViewTests(TestCase):
     """Tests for the booking homepage."""
@@ -57,3 +66,12 @@ class AppointmentsIndexViewTests(TestCase):
 
         available_after = response.context["start_times_available_count"]
         assert available_after < available_before, "Available count not decremented"
+
+    def test_announcements(self):
+        """Check announcement context and rendered text."""
+        response = self.client.get(reverse("index"))
+        self.assertEqual(
+            response.context["announcements"],
+            ["Test announcement"],
+        )
+        self.assertContains(response, "Test announcement")
