@@ -74,3 +74,5 @@ db.sqlite3-journal
 /static_root/
 /media/
 local_settings.py
+
+docs/troubleshooting.md

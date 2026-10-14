@@ -2,7 +2,7 @@ asgiref==3.12.1
 astroid==4.0.4
 coverage==7.15.4
 dill==0.4.1
-Django==5.0.14
+Django==5.2.18
 isort==8.0.1
 lxml==6.1.2
 mccabe==0.7.0

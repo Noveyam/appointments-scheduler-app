@@ -27,4 +27,4 @@ class Appointment(models.Model):
   customer_name = models.TextField()
 
   def __str__(self):
-    return f"{self.service.service} with {self.hairdresser} on {self.start_date}"
+    return f"{self.service.service_name} with {self.hairdresser} on {self.start_datetime}"
