@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - python3 -m pip install -r requirements-dev.txt
+  build:
+    commands:
+      - python3 -m pylint --load-plugins=pylint_django --django-settings-module=hairdresser_django.settings --ignore=migrations appointments/
+      - python3 -m coverage run --source=. manage.py test appointments
+      - python3 -m coverage xml
+reports:
+  UnitTests:
+    files:
+      - 'unittests.xml'
+  NewCoverage:
+    files:
+      - 'coverage.xml'
+    file-format: COBERTURAXML
