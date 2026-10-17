@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -80,6 +80,25 @@ DATABASES = {
     }
 }
 
+if (
+    "DATABASE_HOST" in os.environ
+    and "DATABASE_USER" in os.environ
+    and "DATABASE_DB_NAME" in os.environ
+):
+    DATABASES = {
+        "default": {
+            "HOST": os.environ["DATABASE_HOST"],
+            "USER": os.environ["DATABASE_USER"],
+            "NAME": os.environ["DATABASE_DB_NAME"],
+            "ENGINE": "django_iam_dbauth.aws.mysql",
+            "OPTIONS": {
+                "sql_mode": "traditional",
+                "use_iam_auth": True,
+                "ssl_mode": "REQUIRED",
+                "resolve_cname_enabled": False,
+            },
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

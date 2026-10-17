@@ -1,0 +1,13 @@
+asgiref==3.12.1
+boto3==1.43.114
+botocore==1.43.114
+Django==5.2.18
+django-iam-dbauth==0.2.1
+dnspython==2.9.0
+jmespath==1.1.0
+mysqlclient==2.3.0
+python-dateutil==2.9.0.post0
+s3transfer==0.19.2
+six==1.17.0
+sqlparse==0.6.0
+urllib3==2.8.0
