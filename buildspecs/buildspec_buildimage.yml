@@ -1,0 +1,27 @@
+version: 0.2
+
+env:
+  shell: bash
+
+phases:
+  pre_build:
+    commands:
+      - set -euo pipefail
+      - AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
+      - export AWS_ACCOUNT_ID
+      - export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+      - export ECR_REPOSITORY_URI="${ECR_REGISTRY}/containers-image-repository"
+      - export COMMIT_TAG="${CODEBUILD_RESOLVED_SOURCE_VERSION}"
+      - test -n "$COMMIT_TAG"
+      - echo "Source revision ${COMMIT_TAG}"
+      - aws ecr get-login-password --region "$AWS_DEFAULT_REGION" | docker login --username AWS --password-stdin "$ECR_REGISTRY"
+  build:
+    commands:
+      - docker build --platform linux/amd64 -t appointments-app-container:latest .
+      - docker tag appointments-app-container:latest "${ECR_REPOSITORY_URI}:latest"
+      - docker tag appointments-app-container:latest "${ECR_REPOSITORY_URI}:staging-test-image"
+      - docker tag appointments-app-container:latest "${ECR_REPOSITORY_URI}:${COMMIT_TAG}"
+  post_build:
+    commands:
+      - test "$CODEBUILD_BUILD_SUCCEEDING" = "1"
+      - docker push --all-tags "$ECR_REPOSITORY_URI"
