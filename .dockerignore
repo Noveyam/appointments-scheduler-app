@@ -1,0 +1,15 @@
+.git/
+.venv/
+.aws/
+.env
+.env.*
+docs/
+**/__pycache__/
+**/*.py[cod]
+**/*.sqlite3*
+**/local_settings.py
+**/.DS_Store
+.coverage*
+coverage.xml
+unittests.xml
+htmlcov/
