@@ -21,6 +21,7 @@ phases:
       - docker tag appointments-app-container:latest "${ECR_REPOSITORY_URI}:latest"
       - docker tag appointments-app-container:latest "${ECR_REPOSITORY_URI}:staging-test-image"
       - docker tag appointments-app-container:latest "${ECR_REPOSITORY_URI}:${COMMIT_TAG}"
+      - docker tag appointments-app-container:latest "${ECR_REPOSITORY_URI}:background-color-updated-to-orange"
   post_build:
     commands:
       - test "$CODEBUILD_BUILD_SUCCEEDING" = "1"
