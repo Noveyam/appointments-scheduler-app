@@ -1,12 +1,12 @@
-# PROPOSED TEMPLATE. User copies to manifests/ and commits with the host setting.
-# Apply only the private rendered output; the renderer verifies the image SHA.
+# Reusable Deployment template; render image digest and hostname privately.
+# Apply only a reviewed concrete rendered file.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: appointments-deployment
   namespace: default
   annotations:
-    kubernetes.io/change-cause: "Set application background to cadetblue"
+    kubernetes.io/change-cause: "Configure application ingress and health check hosts"
 spec:
   replicas: 2
   selector:
@@ -38,8 +38,12 @@ spec:
               value: appointments_admin
             - name: DATABASE_DB_NAME
               value: django_appointments
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
             - name: DJANGO_ALLOWED_HOSTS
-              value: "localhost,127.0.0.1,__LOAD_BALANCER_DNS__"
+              value: "localhost,127.0.0.1,$(POD_IP),__LOAD_BALANCER_DNS__"
           resources:
             requests:
               cpu: 100m
