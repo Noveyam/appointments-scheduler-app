@@ -6,7 +6,7 @@ metadata:
   name: appointments-deployment
   namespace: default
   annotations:
-    kubernetes.io/change-cause: "Set application background to orange"
+    kubernetes.io/change-cause: "Set application background to cadetblue"
 spec:
   replicas: 2
   selector:
@@ -22,7 +22,7 @@ spec:
         kubernetes.io/arch: amd64
       containers:
         - name: appointments
-          image: "766158721264.dkr.ecr.us-east-1.amazonaws.com/containers-image-repository:background-color-updated-to-orange@__IMAGE_DIGEST__"
+          image: "766158721264.dkr.ecr.us-east-1.amazonaws.com/containers-image-repository:background-color-updated-to-cadetblue@__IMAGE_DIGEST__"
           imagePullPolicy: Always
           ports:
             - name: http
