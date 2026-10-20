@@ -1,0 +1,35 @@
+version: 0.2
+
+env:
+  shell: bash
+  variables:
+    KUBECTL_VERSION: v1.35.2
+    KUBECTL_SHA256: "924eb50779153f20cb668117d141440b95df2f325a64452d78dff9469145e277"
+    KUBECONFIG: /tmp/deploypods-kubeconfig
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - |
+        set -euo pipefail
+        curl --fail --silent --show-error --location \
+          "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
+          --output /tmp/kubectl
+        printf '%s  /tmp/kubectl\n' "$KUBECTL_SHA256" | sha256sum --check -
+        install -m 0755 /tmp/kubectl /usr/local/bin/kubectl
+        kubectl version --client
+        aws --version
+        python3 --version
+  pre_build:
+    commands:
+      - test "$AWS_DEFAULT_REGION" = us-east-1
+      - aws eks update-kubeconfig --region "$AWS_DEFAULT_REGION" --name eks-cluster --kubeconfig "$KUBECONFIG"
+  build:
+    commands:
+      - python3 scripts/deploy_app.py
+  post_build:
+    commands:
+      - test "$CODEBUILD_BUILD_SUCCEEDING" = "1"
+      - kubectl --kubeconfig "$KUBECONFIG" -n default get deployment/appointments-deployment service/appointments-service ingress/appointments-ingress
